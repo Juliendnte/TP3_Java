@@ -1,6 +1,7 @@
 package PMenu;
 
 import PTools.tools;
+import PTP_POO.PTP3.Controlleur.*;
 
 public class Menu {
     public static void main(String[] args) {
@@ -11,6 +12,7 @@ public class Menu {
         while (true){
             try {
                 switch (tools.AskString("Quels TP voulez-vous essayer?\n1-TP.31\n2-TP.32\nq.quitter\n")){
+                    case "1" -> CTP3_1.execute();
 
                     case "q","Q" -> {
                         return;
