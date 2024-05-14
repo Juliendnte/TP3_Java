@@ -1,13 +1,15 @@
 package PTP_POO.PTP3.Controlleur;
 
-import PTP_POO.PTP3.Model.MTP3_1;
+import PTP_POO.PTP3.Model.Carte;
 import PTP_POO.PTP3.Model.Paquet;
 import PTP_POO.PTP3.Vue.VSwing;
+import PTools.tools;
 
 import java.util.ArrayList;
 
+import static PTP_POO.PTP3.Vue.VTP3_1.CreateCarte;
+
 public class CTP3_1 implements IControlleur {
-    private final MTP3_1 m_mod;
     private final VSwing v_mod;
 
 
@@ -16,34 +18,41 @@ public class CTP3_1 implements IControlleur {
     }
 
     public static void execute(){
-        new CTP3_1(new MTP3_1(),new VSwing()).lancer();
+        new CTP3_1(new VSwing()).lancer();
     }
-    public CTP3_1(MTP3_1 mMod, VSwing vMod) {
-        this.m_mod = mMod;
+    public CTP3_1( VSwing vMod) {
         this.v_mod = vMod;
     }
 
     @Override
     public void lancer(){
-        MTP3_1.Carte carte = this.m_mod.new Carte("10", "pique");
-
+        String[] params = CreateCarte();
+        Carte carte;
+        try {
+            carte = new Carte(params[0], params[1]);
+        }catch (IllegalArgumentException e){
+            System.err.println("Erreur -> "+ e);
+            execute();
+            return;
+        }
 
         System.out.println(carte);
-
-        MTP3_1.Carte carte2 = this.m_mod.new Carte(carte);
-
-        carte2.setVal("9");
-        carte2.setCouleur("carreau");
-
-        System.out.println(carte2);
-
         v_mod.showCarte(carte);
 
         Paquet paquet = new Paquet(new ArrayList<>());
 
-        paquet.add(carte);
-        paquet.add(carte2);
+        while (true){
+             switch (tools.AskInt("Voulez-vous ajouter une carte dans votre paquet(1) Ou montrer votre paquet(2) ")){
+                 case 1 -> {
+                     params = CreateCarte();
+                     paquet.add(new Carte(params[0], params[1]));
+                 }
+                 case 2-> v_mod.showPaquetDeCartes(paquet);
 
-        v_mod.showPaquetDeCartes(paquet);
+                 default -> {
+                     return;
+                 }
+             }
+        }
     }
 }

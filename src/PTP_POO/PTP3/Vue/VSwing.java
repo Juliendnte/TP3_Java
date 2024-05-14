@@ -1,20 +1,13 @@
 package PTP_POO.PTP3.Vue;
 
-import PTP_POO.PTP3.Model.MTP3_1;
+import PTP_POO.PTP3.Model.Carte;
 import PTP_POO.PTP3.Model.Paquet;
+
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class VSwing extends JFrame {
-
-    // Constantes pour les dimensions des cartes
-    private static final int LARGEUR_CARTE = 100;
-    private static final int HAUTEUR_CARTE = 150;
-    private static final int LARGEUR_CARTE_PAQUET = 50;
-    private static final int HAUTEUR_CARTE_PAQUET = 75;
 
     public VSwing(){
     }
@@ -39,6 +32,9 @@ public class VSwing extends JFrame {
 
         JPanel contentPane = new JPanel(new BorderLayout());
 
+        // Constantes pour les dimensions des cartes
+        int LARGEUR_CARTE = 100;
+        int HAUTEUR_CARTE = 150;
         JPanel cartePanel = affichageCarte(valeur, symbole, LARGEUR_CARTE, HAUTEUR_CARTE);
         contentPane.add(cartePanel, BorderLayout.NORTH);
 
@@ -69,11 +65,13 @@ public class VSwing extends JFrame {
         return cartePanel;
     }
 
-    // Méthode pour afficher le paquet de cartes
     private JPanel afficherPaquet(Paquet paquet) {
         JPanel paquetPanel = new JPanel();
 
-        for (MTP3_1.Carte carte : paquet) {
+        int LARGEUR_CARTE_PAQUET = 50;
+        int HAUTEUR_CARTE_PAQUET = 75;
+
+        for (Carte carte : paquet) {
             JPanel cartePanel = affichageCarte(carte.getVal(), carte.getSymbole(), LARGEUR_CARTE_PAQUET, HAUTEUR_CARTE_PAQUET);
             paquetPanel.add(cartePanel);
         }
@@ -81,7 +79,7 @@ public class VSwing extends JFrame {
         return paquetPanel;
     }
 
-    public void showCarte(MTP3_1.Carte carte){
+    public void showCarte(Carte carte){
         SwingUtilities.invokeLater(() -> {
             VSwing cartesGUI = new VSwing(carte.getVal(), carte.getSymbole());
             cartesGUI.setVisible(true);

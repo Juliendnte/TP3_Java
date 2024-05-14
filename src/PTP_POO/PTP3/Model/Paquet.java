@@ -5,10 +5,10 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-public class Paquet implements Iterable<MTP3_1.Carte>{
-    private final ArrayList<MTP3_1.Carte> L_cartes;
+public class Paquet implements Iterable<Carte>{
+    private final ArrayList<Carte> L_cartes;
 
-    public Paquet(ArrayList<MTP3_1.Carte> listcarte){
+    public Paquet(ArrayList<Carte> listcarte){
         if (listcarte.size() >= 52){
             throw new IllegalArgumentException("Il ne peut avoir que 52 carte dans le Jeu");
         }
@@ -20,9 +20,9 @@ public class Paquet implements Iterable<MTP3_1.Carte>{
         L_cartes = listcarte;
     }
 
-    private boolean ElementIdentique(ArrayList<MTP3_1.Carte> liste) {
-        Set<MTP3_1.Carte> elementsUniques = new HashSet<>();
-        for (MTP3_1.Carte carte : liste) {
+    private boolean ElementIdentique(ArrayList<Carte> liste) {
+        Set<Carte> elementsUniques = new HashSet<>();
+        for (Carte carte : liste) {
             if (!elementsUniques.add(carte)) {
                 return true;
             }
@@ -30,7 +30,7 @@ public class Paquet implements Iterable<MTP3_1.Carte>{
         return false;
     }
 
-    public void add(MTP3_1.Carte carte){
+    public void add(Carte carte){
         L_cartes.add(carte);
         if (ElementIdentique(L_cartes)) {
             L_cartes.removeLast();
@@ -42,7 +42,11 @@ public class Paquet implements Iterable<MTP3_1.Carte>{
     }
 
     @Override
-    public Iterator<MTP3_1.Carte> iterator() {
+    public Iterator<Carte> iterator() {
         return L_cartes.iterator();
+    }
+
+    public ArrayList<Carte> getL_cartes(){
+        return L_cartes;
     }
 }
