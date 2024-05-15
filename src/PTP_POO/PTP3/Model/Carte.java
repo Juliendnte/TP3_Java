@@ -2,16 +2,27 @@ package PTP_POO.PTP3.Model;
 
 import java.util.Arrays;
 
+/**La classe Carte représente une carte à jouer avec une valeur et une couleur.*/
 public class Carte{
 
-
+    /** L'énumération des couleurs possible de la carte. */
     public enum  e_couleur {pique, carreau, trefle, coeur}
+
+    /** Les valeurs valides d'une carte. */
     private final String[] e_valeur = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"};
 
+    /** La valeur de la carte. */
     private String m_valeur;
+
+    /** La couleur de la carte. */
     private e_couleur m_couleur;
 
-
+    /**
+     * Constructeur de la classe Carte.
+     * @param Val La valeur de la carte.
+     * @param Couleur La couleur de la carte.
+     * @throws IllegalArgumentException si la valeur de la carte n'est pas valide.
+     */
     public Carte(String Val, String Couleur) throws IllegalArgumentException {
         if (!Arrays.asList(e_valeur).contains(Val)) {
             throw new IllegalArgumentException("La valeur de la carte n'est pas valide.");
@@ -20,16 +31,24 @@ public class Carte{
         if (Val.equals("1")){
             Val = "As";
         }
-        this.m_couleur = toE_Couleur(Couleur);
+        m_couleur = toE_Couleur(Couleur);
 
-        this.m_valeur = Val;
+        m_valeur = Val;
     }
 
+    /**
+     * Constructeur de copie de la classe Carte.
+     * @param carte L'objet Carte à copier.
+     */
     public Carte(Carte carte){
         this.m_couleur = carte.m_couleur;
         this.m_valeur = carte.m_valeur;
     }
 
+    /**
+     * Surcharge de toString pour afficher le message que l'on voit quand on print ma carte
+     * @return Message
+     */
     @Override
     public String toString(){
         if (this.m_valeur.equals("1")){
@@ -38,6 +57,11 @@ public class Carte{
         return toWord(this.m_valeur) + " de " + this.m_couleur;
     }
 
+    /**
+     * Vérifie si une carte est égale à un autre objet.
+     * @param obj L'objet à comparer.
+     * @return true si les deux objets sont égaux, false sinon.
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -49,6 +73,8 @@ public class Carte{
         Carte autreCarte = (Carte) obj;
         return this.m_valeur.equals(autreCarte.m_valeur) && this.m_couleur.equals(autreCarte.m_couleur);
     }
+
+
 
     public void assign(Carte aCarte) {
         this.m_couleur = aCarte.m_couleur;
@@ -92,9 +118,8 @@ public class Carte{
             default ->throw new IllegalArgumentException("La couleur de la carte n'est pas valide.");
         };
     }
-
-    public String toWord(String letter) throws IllegalStateException{
-        return switch (letter){
+    public String toWord(String letter) throws IllegalStateException {
+        return switch (letter) {
             case "J" -> "Valet";
             case "Q" -> "Reine";
             case "K" -> "Roi";

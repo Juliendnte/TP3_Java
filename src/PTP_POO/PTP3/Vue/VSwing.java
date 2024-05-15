@@ -3,41 +3,36 @@ package PTP_POO.PTP3.Vue;
 import PTP_POO.PTP3.Model.Carte;
 import PTP_POO.PTP3.Model.Paquet;
 
-
 import javax.swing.*;
 import java.awt.*;
 
 public class VSwing extends JFrame {
 
-    public VSwing(){
+    public VSwing() {
     }
 
     public VSwing(Paquet paquet) {
         setTitle("Affichage de Paquet de Cartes");
         setSize(800, 300);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);  // Change to DISPOSE_ON_CLOSE
         setLocationRelativeTo(null);
 
         JPanel contentPane = new JPanel(new BorderLayout());
-        contentPane.add(afficherPaquet(paquet), BorderLayout.CENTER);
+        contentPane.add(affichagePaquet(paquet), BorderLayout.CENTER);
 
         setContentPane(contentPane);
     }
 
-    public VSwing(String valeur, String symbole) {
+    public VSwing(Carte carte) {
         setTitle("Affichage de Carte");
         setSize(800, 300);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);  // Change to DISPOSE_ON_CLOSE
         setLocationRelativeTo(null);
 
         JPanel contentPane = new JPanel(new BorderLayout());
 
-        // Constantes pour les dimensions des cartes
-        int LARGEUR_CARTE = 100;
-        int HAUTEUR_CARTE = 150;
-        JPanel cartePanel = affichageCarte(valeur, symbole, LARGEUR_CARTE, HAUTEUR_CARTE);
+        JPanel cartePanel = affichageCarte(carte.getVal(), carte.getSymbole(), 100, 150);
         contentPane.add(cartePanel, BorderLayout.NORTH);
-
 
         setContentPane(contentPane);
     }
@@ -51,13 +46,17 @@ public class VSwing extends JFrame {
 
                 int x = (getWidth() - largeur) / 2;
                 int y = (getHeight() - hauteur) / 2;
+
                 g2d.setColor(Color.WHITE);
                 g2d.fillRect(x, y, largeur, hauteur);
                 g2d.setColor(Color.BLACK);
                 g2d.drawRect(x, y, largeur, hauteur);
 
                 g2d.drawString(valeur, x + 10, y + 20);
-                g2d.drawString(symbole, x + 10, y + 40);
+                g2d.drawString(symbole, x + 10, y + 35);
+
+                g2d.drawString(symbole, x + largeur - 20, y + hauteur - 20);
+                g2d.drawString(valeur, x + largeur - 20, y + hauteur - 5);
             }
         };
 
@@ -65,23 +64,20 @@ public class VSwing extends JFrame {
         return cartePanel;
     }
 
-    private JPanel afficherPaquet(Paquet paquet) {
+    private JPanel affichagePaquet(Paquet paquet) {
         JPanel paquetPanel = new JPanel();
 
-        int LARGEUR_CARTE_PAQUET = 50;
-        int HAUTEUR_CARTE_PAQUET = 75;
-
         for (Carte carte : paquet) {
-            JPanel cartePanel = affichageCarte(carte.getVal(), carte.getSymbole(), LARGEUR_CARTE_PAQUET, HAUTEUR_CARTE_PAQUET);
+            JPanel cartePanel = affichageCarte(carte.getVal(), carte.getSymbole(), 50, 75);
             paquetPanel.add(cartePanel);
         }
 
         return paquetPanel;
     }
 
-    public void showCarte(Carte carte){
+    public void showCarte(Carte carte) {
         SwingUtilities.invokeLater(() -> {
-            VSwing cartesGUI = new VSwing(carte.getVal(), carte.getSymbole());
+            VSwing cartesGUI = new VSwing(carte);
             cartesGUI.setVisible(true);
         });
     }

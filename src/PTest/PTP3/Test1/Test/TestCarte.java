@@ -11,8 +11,8 @@ public class TestCarte {
     private Carte carte;
 
     @Before
-    public void setUp(){
-        carte = new Carte("10","pique");
+    public void setUp() {
+        carte = new Carte("10", "pique");
     }
 
     @Test

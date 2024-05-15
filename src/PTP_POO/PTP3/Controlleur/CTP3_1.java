@@ -7,7 +7,6 @@ import PTools.tools;
 
 import java.util.ArrayList;
 
-import static PTP_POO.PTP3.Vue.VTP3_1.CreateCarte;
 
 public class CTP3_1 implements IControlleur {
     private final VSwing v_mod;
@@ -26,33 +25,37 @@ public class CTP3_1 implements IControlleur {
 
     @Override
     public void lancer(){
-        String[] params = CreateCarte();
+        String[] params;
         Carte carte;
-        try {
-            carte = new Carte(params[0], params[1]);
-        }catch (IllegalArgumentException e){
-            System.err.println("Erreur -> "+ e);
-            execute();
-            return;
-        }
-
-        System.out.println(carte);
-        v_mod.showCarte(carte);
-
         Paquet paquet = new Paquet(new ArrayList<>());
-
-        while (true){
-             switch (tools.AskInt("Voulez-vous ajouter une carte dans votre paquet(1) Ou montrer votre paquet(2) ")){
-                 case 1 -> {
-                     params = CreateCarte();
-                     paquet.add(new Carte(params[0], params[1]));
-                 }
-                 case 2-> v_mod.showPaquetDeCartes(paquet);
-
-                 default -> {
-                     return;
-                 }
-             }
+        while (true) {
+            switch (tools.AskInt("Choisissez une action: \n1. Ajouter une carte\n2. Afficher une carte\n3. Afficher le paquet de cartes\n4. Quitter\n")) {
+                case 1 -> {
+                    try {
+                        tools.AskString("");
+                        params = new String[]{tools.AskString("Entrez la valeur de la carte (1, 2, ..., 10, J, Q, K, A): "), tools.AskString("Entrez la couleur de la carte (pique, carreau, trefle, coeur): ")};
+                        carte = new Carte(params[0], params[1]);
+                        paquet.add(carte);
+                    }catch (IllegalArgumentException err){
+                        System.out.println("erreur : "+ err);
+                    }
+                }
+                case 2 -> {
+                    try {
+                        tools.AskString("");
+                        params =  new String[]{tools.AskString("Entrez la valeur de la carte (1, 2, ..., 10, J, Q, K, A): "), tools.AskString("Entrez la couleur de la carte (pique, carreau, trefle, coeur): ")};
+                        carte = new Carte(params[0], params[1]);
+                        v_mod.showCarte(carte);
+                    }catch (IllegalArgumentException err){
+                        System.out.println("erreur : "+ err);
+                    }
+                }
+                case 3 -> v_mod.showPaquetDeCartes(paquet);
+                case 4 -> {
+                    return;
+                }
+                default -> System.out.println("Choix invalide.");
+            }
         }
     }
 }
