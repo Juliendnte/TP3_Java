@@ -29,7 +29,7 @@ public class Carte{
         }
 
         if (Val.equals("1")){
-            Val = "As";
+            Val = "A";
         }
         m_couleur = toE_Couleur(Couleur);
 

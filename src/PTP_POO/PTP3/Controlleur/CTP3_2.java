@@ -34,7 +34,7 @@ public class CTP3_2 implements IControlleur {
                 }
                 case 3->{
                     VTP3_2.UpdateInfo params = v_mod.updateAttributTimbre(collectionTimbre);
-                    collectionTimbre.getL_timbres().get(params.getIndex()).update(params.getCle(), params.getVal());
+                    collectionTimbre.getL_timbres().get(params.index()).update(params.cle(), params.val());
                 }
                 case 4 ->{
                     collectionTimbre.saveCollection();

@@ -54,4 +54,12 @@ public class Timbre{
         }
         return result.toString();
     }
+
+    /**
+     * Obtient la version Json de ma classe timbre
+     * @return Le Json de ma classe timbre
+     */
+    public String toJson() {
+        return String.format("{\"Designation\":\"%s\",\"SignatureDessinateur\":\"%s\",\"Année\":\"%s\",\"Valeur\":\"%s\",\"Pays\":\"%s\",\"Dentelure\":\"%s\",\"Oeuvre\":\"%s\"}", this.Attribut.get("Designation"), this.Attribut.get("SignatureDessinateur"), this.Attribut.get("Année"), this.Attribut.get("Valeur"), this.Attribut.get("Pays"), this.Attribut.get("Dentelure"), this.Attribut.get("Oeuvre"));
+    }
 }

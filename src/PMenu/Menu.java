@@ -13,16 +13,16 @@ public class Menu {
             try {
                 switch (tools.AskString("Quels TP voulez-vous essayer?\n1-TP.31\n2-TP.32\nq.quitter\n")){
                     case "1" -> CTP3_1.execute();
-
+                    case "2" -> CTP3_2.execute();
                     case "q","Q" -> {
                         return;
                     }
                     default -> System.out.println("Résultat inconnue");
                 }
             }catch (Exception e){
-                System.out.flush();
-                System.err.println("Erreur trouvé => "+ e);
+                System.out.println("Erreur trouvé => "+ e);
             }
+            tools.AskString("");
         }
     }
 }

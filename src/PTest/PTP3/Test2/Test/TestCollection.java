@@ -10,30 +10,49 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
+
 public class TestCollection {
 
-    private Timbre timbre;
-    private  HashMap<String, String> map;
+    private ArrayList<Timbre> arrayList;
+    private CollectionTimbre coll;
 
     @Before
     public void setUp(){
-        map = new HashMap<>();
-        map.put("Filet", "Filet décoratif rouge");
-        map.put("Facial", "Portrait de Louis Pasteur");
-        map.put("Dentelure", "12 1/2 x 12 1/2");
+        HashMap<String, String> map = new HashMap<>();
+        map.put("Designation", "Timbre-poste");
+        map.put("Valeur", "1 Franc");
+        map.put("Dentelure", "12 x 12");
+        map.put("Année","1995");
         map.put("Pays", "France");
-        map.put("Designation", "Timbre-poste ordinaire");
-        map.put("Oeuvre", "Louis Pasteur en laboratoire");
-        map.put("SignatureGraveur", "Albert Decaris");
-        map.put("SignatureDessinateur", "Pierre Gandon");
-        timbre = new Timbre(map);
+        map.put("Oeuvre", "Portrait de Marianne");
+        map.put("SignatureDessinateur", "Jean Dupont");
+        arrayList = new ArrayList<>();
+        arrayList.add(new Timbre(map));
+        coll = new CollectionTimbre(arrayList);
+    }
+
+    @Test
+    public void TesttoString(){
+        assertEquals(coll.toString(),"Collection de timbres:\n" +
+                "Timbre:\n" +
+                "Designation: Timbre-poste\n" +
+                "SignatureDessinateur: Jean Dupont\n" +
+                "Année: 1995\n" +
+                "Valeur: 1 Franc\n" +
+                "Pays: France\n" +
+                "Dentelure: 12 x 12\n" +
+                "Oeuvre: Portrait de Marianne\n" +
+                "\n");
+
+
     }
 
     @Test
     public void TestWrite(){
-        ArrayList<Timbre> arrayList = new ArrayList<>();
-        CollectionTimbre coll = new CollectionTimbre(arrayList);
-        coll.recupCollection();
+        coll.saveCollection();
         System.out.println(coll);
+        assertEquals(coll.recupCollection(),coll.getL_timbres());
     }
+
 }

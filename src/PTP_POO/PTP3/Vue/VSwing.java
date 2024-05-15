@@ -83,9 +83,13 @@ public class VSwing extends JFrame {
     }
 
     public void showPaquetDeCartes(Paquet paquet) {
-        SwingUtilities.invokeLater(() -> {
-            VSwing cartesGUI = new VSwing(paquet);
-            cartesGUI.setVisible(true);
-        });
+        if (!paquet.getL_cartes().isEmpty()) {
+            SwingUtilities.invokeLater(() -> {
+                VSwing cartesGUI = new VSwing(paquet);
+                cartesGUI.setVisible(true);
+            });
+        }else {
+            System.out.println("Le paquet de carte est vide");
+        }
     }
 }

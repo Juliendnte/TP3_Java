@@ -5,7 +5,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.io.FileWriter;
 
 /**La classe CollectionTimbre représente une Liste de timbre*/
@@ -30,6 +29,7 @@ public class CollectionTimbre{
         return L_timbres;
     }
 
+
     /**
      * Surcharge de toString pour afficher le message que l'on voit quand on print ma collection
      * @return Le message
@@ -44,7 +44,7 @@ public class CollectionTimbre{
     }
 
     /**
-     * Sauvegarde la collection de timbres dans un fichier JSON.
+     * Sauvegarde la collection de timbres dans un fichier JSON
      */
     public void saveCollection(){
         int totalElements = L_timbres.size();
@@ -52,18 +52,11 @@ public class CollectionTimbre{
 
         try (FileWriter writer = new FileWriter("src/PTP_POO/PTP3/DB/ListTimbre.json")) {
             writer.write("[\n");
-            for (Timbre lTimbre : this.L_timbres) {
+            for (Timbre timbre : this.L_timbres) {
                 ++count1;
-                writer.write("{\n");
+                writer.write(timbre.toJson());
 
-                int totalEntries = lTimbre.getTimbre().size();
-                int count2 = 0;
-                for (Map.Entry<String, String> entry : lTimbre.getTimbre().entrySet()) {
-                    ++count2;
-                    writer.write("\t\"" + entry.getKey() + "\": \"" + entry.getValue() + "\"" + (count2 < totalEntries ? ",\n" : "\n"));
-                }
-
-                writer.write(count1 < totalElements ? "},\n" : "}\n");
+                writer.write(count1 < totalElements ? ",\n" : "\n");
             }
             writer.write("]");
         } catch (IOException e) {
@@ -73,8 +66,9 @@ public class CollectionTimbre{
 
     /**
      * Récupère la collection de timbres depuis un fichier JSON.
+     * @return La collection de timbre
      */
-    public void recupCollection() {
+    public ArrayList<Timbre> recupCollection() {
         try {
             //jsonContent = le json en string
             String jsonContent = new String(Files.readAllBytes(Paths.get("src/PTP_POO/PTP3/DB/ListTimbre.json")));
@@ -94,7 +88,7 @@ public class CollectionTimbre{
                 for (String timbre : timbres) {
                     //La je prend juste le contenu entre les accolades
                     timbre = timbre.replaceAll("\\{", "").replaceAll("}", "");
-                    HashMap<String, String> attributs = getAttributs(timbre);
+                    HashMap<String, String> attributs = extractAttributs(timbre);
 
                     //Je cast ma map en timbres et l'ajoute dans la collection
                     lsttimbres.add(new Timbre(attributs));
@@ -106,6 +100,7 @@ public class CollectionTimbre{
         }catch (IOException e) {
             System.out.println("erreur : "+e);
         }
+        return L_timbres;
     }
 
     /**
@@ -113,7 +108,7 @@ public class CollectionTimbre{
      * @param timbre Le JSON du timbre.
      * @return Une map des attributs du timbre.
      */
-    private HashMap<String, String> getAttributs(String timbre) {
+    private HashMap<String, String> extractAttributs(String timbre) {
         //Ici je sépare les attributs des autres
         String[] attribut = timbre.split("\\s*,\\s*");
         HashMap<String, String> attributs = new HashMap<>();

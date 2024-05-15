@@ -7,57 +7,27 @@ import java.util.HashMap;
 
 public class VTP3_2 {
     public UpdateInfo updateAttributTimbre(CollectionTimbre collection) {
-        int index = tools.AskInt("Indiquez l'index du timbre que vous souhaitez mettre à jour :");
+        int index = tools.AskInt("Quel timbre que vous souhaitez mettre à jour (ex : 1, 2, 3, etc...) :") - 1;
         tools.AskString("");
-        if (index >= 0 && index < collection.getL_timbres().size()) {
-            String cle = tools.AskString("Entrez le nom de l'attribut à mettre à jour :");
-            String val = tools.AskString("Entrez la nouvelle valeur de l'attribut :");
-            return new UpdateInfo(index, cle, val);
-        } else {
+        if (index >= 0 && index < collection.getL_timbres().size())
+            return new UpdateInfo(index, tools.AskString("Entrez le nom de l'attribut à mettre à jour :"), tools.AskString("Entrez la nouvelle valeur de l'attribut :"));
+        else
             throw new IllegalArgumentException("Index invalide");
-        }
     }
 
     public HashMap<String, String> addTimbre() {
         HashMap<String, String> attributs = new HashMap<>();
+        tools.AskString("");
         attributs.put("Pays", tools.AskString("Veuillez saisir les attributs du timbre :\nPays : "));
         attributs.put("Valeur", tools.AskString("Valeur : "));
         attributs.put("Année", tools.AskString("Année : "));
-
-        /*
-        "Designation": "Timbre-poste ordinaire",
-	"Filet": "Filet décoratif rouge",
-	"Facial": "Portrait de Louis Pasteur",
-	"SignatureDessinateur": "Pierre Gandon",
-	"Pays": "France",
-	"SignatureGraveur": "Albert Decaris",
-	"Dentelure": "12 1/2 x 12 1/2",
-	"Oeuvre": "Louis Pasteur en laboratoire"
-         */
+        attributs.put("SignatureDessinateur", tools.AskString("Signature du Dessinateur :"));
+        attributs.put("Designation",tools.AskString("Designation :"));
+        attributs.put("Dentelure", tools.AskString("Dentelure :"));
+        attributs.put("Oeuvre", tools.AskString("Oeuvre :"));
         return attributs;
     }
 
-    public class UpdateInfo {
-        private final int index;
-        private final String cle;
-        private final String val;
-
-        public UpdateInfo(int index, String cle, String val) {
-            this.index = index;
-            this.cle = cle;
-            this.val = val;
-        }
-
-        public int getIndex() {
-            return index;
-        }
-
-        public String getCle() {
-            return cle;
-        }
-
-        public String getVal() {
-            return val;
-        }
+    public record UpdateInfo(int index, String cle, String val) {
     }
 }
